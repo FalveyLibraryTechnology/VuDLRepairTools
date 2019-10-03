@@ -207,7 +207,7 @@ class Fedora3Fixer
         "info:fedora/#{pid}",
         'http://vudl.org/relationships#sequence',
         sequence,
-        'false',
+        'true',
         nil
       )
     end
