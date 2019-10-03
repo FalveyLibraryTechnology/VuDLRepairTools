@@ -213,6 +213,20 @@ class Fedora3Fixer
     end
   end
 
+  def self.restore_processmd_from_file(pid)
+    xmlfile = '/tmp/process-md/' + pid.sub(':', '_') + '.xml'
+    processmd = File.open(xmlfile, 'rb').read
+    resource = Fedora3Object.from_pid pid
+    self.restore_datastream(resource, 'PROCESS-MD', 'Process Metadata for this Resource', processmd)
+  end
+
+  def self.restore_processmd_from_pid_list(file)
+    CSV.foreach(file) do |row|
+      puts "Restoring PID: #{row[0]}"
+      self.restore_processmd_from_file(row[0])
+    end
+  end
+
   def self.restore_xml_from_pid_list(file)
     CSV.foreach(file) do |row|
       puts "Restoring PID: #{row[0]}"
